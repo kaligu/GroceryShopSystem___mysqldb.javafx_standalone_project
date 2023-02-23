@@ -1,6 +1,5 @@
-package lk.ijse.groceryshop.view.tm;
+package lk.ijse.groceryshop.entity;
 
-import javafx.scene.control.Button;
 import lombok.*;
 
 @Getter
@@ -8,10 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CustomerTm {
+public class Customer {
     private String id;
     private String name;
     private String address;
     private double salary;
-    private Button btn;
 }
