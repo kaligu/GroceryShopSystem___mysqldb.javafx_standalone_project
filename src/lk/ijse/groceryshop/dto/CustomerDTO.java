@@ -1,4 +1,4 @@
-package lk.ijse.groceryshop.entity;
+package lk.ijse.groceryshop.dto;
 
 import lombok.*;
 @Getter
@@ -6,10 +6,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Customer implements SuperEntity{
+public class CustomerDTO {
     private String id;
     private String name;
     private String address;
     private double salary;
-
 }

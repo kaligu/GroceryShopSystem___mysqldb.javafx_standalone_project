@@ -54,7 +54,7 @@ public class DashboardFormController {
 
     private void setUi(String ui) throws IOException {
         Stage stage = (Stage)dashboardContext.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/"+ui+".fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../resources/forms/CustomerForm.fxml"))));
         stage.centerOnScreen();
     }
 }
