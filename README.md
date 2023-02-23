@@ -2,3 +2,4 @@
 Layerd Architecture
  , javafx
  , mysql database
+  , Project lombok added
