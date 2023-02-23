@@ -1,4 +1,4 @@
 # GroceryShopSystem___mysqldb.javafx_standalone_project
-Layerd Architecture , 
+Layerd Architecture
  , javafx
  , mysql database
