@@ -1,9 +1,11 @@
 package lk.ijse.groceryshop.dao.custom.impl;
 
 import lk.ijse.groceryshop.dao.custom.CustomerDAO;
+import lk.ijse.groceryshop.dto.CustomerDTO;
 import lk.ijse.groceryshop.entity.Customer;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Optional;
 
 public class CustomerDAOImpl implements CustomerDAO {
@@ -36,5 +38,10 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean existByPk(String pk) {
         return false;
+    }
+
+    @Override
+    public List<Customer> SearchCustomersByTesxt(String text) {
+        return null;
     }
 }

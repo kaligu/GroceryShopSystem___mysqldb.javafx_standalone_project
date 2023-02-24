@@ -5,6 +5,7 @@ import lk.ijse.groceryshop.dao.DAOTypes;
 import lk.ijse.groceryshop.dao.custom.CustomerDAO;
 import lk.ijse.groceryshop.db.DBConnection;
 import lk.ijse.groceryshop.dto.CustomerDTO;
+import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.service.util.Convertor;
 
@@ -52,6 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> searchCustomerByText(String text) {
-        return null;
+        List<CustomerDTO> list=null;
+        for(Customer c:customerDAO.SearchCustomersByTesxt(text)){
+            list.add(convertor.fromCustomer(c));
+        }
+        return  list;
     }
 }
