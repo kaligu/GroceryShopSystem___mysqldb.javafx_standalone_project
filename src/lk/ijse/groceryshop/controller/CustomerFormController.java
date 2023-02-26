@@ -1,18 +1,28 @@
 package lk.ijse.groceryshop.controller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.groceryshop.dto.CustomerDTO;
+import lk.ijse.groceryshop.service.ServiceFactory;
+import lk.ijse.groceryshop.service.ServiceTypes;
+import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.view.tm.CustomerTm;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerFormController {
     public TextField txtId;
@@ -29,12 +39,11 @@ public class CustomerFormController {
     public AnchorPane customerFormContext;
     public TextField txtSearch;
 
-    //private CustomerBo customerBo= BoFactory.getInstance().getBo(BoTypes.CUSTOMER);
+    private CustomerService customerService= ServiceFactory.getInstance().getService(ServiceTypes.CUSTOMER);
 
     private String searchText="";
 
     public void initialize() {
-        /*
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -42,6 +51,7 @@ public class CustomerFormController {
         colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
         searchCustomers(searchText);
+        /*
         tblCustomer.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -68,50 +78,46 @@ public class CustomerFormController {
     } */
 
     private void searchCustomers(String text) {
-        /*
-        String searchText="%"+text+"%";
-        try {
 
-            ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
+        ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
 
-           ArrayList<CustomerDto> customerList= customerBo.searchCustomers(searchText);
+        List<CustomerDTO> customerList= customerService.searchCustomerByText(searchText);
 
-            for (CustomerDto c: customerList){
-                    Button btn = new Button("Delete");
-                    CustomerTm tm = new CustomerTm(
-                            c.getId(),
-                            c.getName(),
-                            c.getAddress(),
-                            c.getSalary(),
-                            btn);
-                    tmList.add(tm);
-                    btn.setOnAction(event -> {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                                "are you sure whether do you want to delete this customer?",
-                                ButtonType.YES, ButtonType.NO);
-                        Optional<ButtonType> buttonType = alert.showAndWait();
-                        if (buttonType.get() == ButtonType.YES) {
-                            try {
-                                if (customerBo.deleteCustomer(tm.getId())) {
-                                    searchCustomers(searchText);
-                                    new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
-                                } else {
-                                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                                }
-                            }catch (ClassNotFoundException | SQLException e){
-                                e.printStackTrace();
-                            }
-
-
+        for (CustomerDTO c: customerList){
+            Button btn = new Button("Delete");
+            CustomerTm tm = new CustomerTm(
+                    c.getId(),
+                    c.getName(),
+                    c.getAddress(),
+                    c.getSalary(),
+                    btn);
+            tmList.add(tm);
+            /*
+            btn.setOnAction(event -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                        "are you sure whether do you want to delete this customer?",
+                        ButtonType.YES, ButtonType.NO);
+                Optional<ButtonType> buttonType = alert.showAndWait();
+                if (buttonType.get() == ButtonType.YES) {
+                    try {
+                        if (customerBo.deleteCustomer(tm.getId())) {
+                            searchCustomers(searchText);
+                            new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
+                        } else {
+                            new Alert(Alert.AlertType.WARNING, "Try Again!").show();
                         }
-                    });
-            }
-            tblCustomer.setItems(tmList);
+                    }catch (ClassNotFoundException | SQLException e){
+                        e.printStackTrace();
+                    }
 
-        }catch (ClassNotFoundException | SQLException e){
-            e.printStackTrace();
+
+                }
+            });
+
+             */
         }
-*/
+        tblCustomer.setItems(tmList);
+
     }
 
     public void saveCustomerOnAction(ActionEvent actionEvent) {

@@ -10,6 +10,7 @@ import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.service.util.Convertor;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -53,8 +54,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> searchCustomerByText(String text) {
-        List<CustomerDTO> list=null;
-        for(Customer c:customerDAO.SearchCustomersByTesxt(text)){
+        List<CustomerDTO> list=new ArrayList<>();
+        List<Customer> listc = new ArrayList<>();
+        listc.addAll(customerDAO.SearchCustomersByTesxt(text));
+        System.out.println(listc.size());
+        for(Customer c:listc){
             list.add(convertor.fromCustomer(c));
         }
         return  list;
