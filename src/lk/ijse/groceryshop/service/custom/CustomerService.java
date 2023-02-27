@@ -6,11 +6,11 @@ import lk.ijse.groceryshop.service.SuperService;
 import java.util.List;
 
 public interface CustomerService extends SuperService {
-    public CustomerDTO saveCustomer(CustomerDTO customerDTO);
+    public boolean saveCustomer(CustomerDTO customerDTO);
 
-    public CustomerDTO updateCustomer(CustomerDTO customerDTO);
+    public boolean updateCustomer(CustomerDTO customerDTO);
 
-    public void deleteCustomer(String pk);
+    public boolean deleteCustomer(String pk);
 
     public List<CustomerDTO> findAllCustomers();
 

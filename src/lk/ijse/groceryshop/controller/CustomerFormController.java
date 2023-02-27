@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -21,8 +18,10 @@ import lk.ijse.groceryshop.view.tm.CustomerTm;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CustomerFormController {
     public TextField txtId;
@@ -51,7 +50,7 @@ public class CustomerFormController {
         colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
 
         searchCustomers(searchText);
-        /*
+
         tblCustomer.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -64,18 +63,17 @@ public class CustomerFormController {
                     searchText=newValue;
                     searchCustomers(searchText);
                 });
-                */
 
 
     }
-/*
+
     private void setData(CustomerTm tm) {
         txtId.setText(tm.getId());
         txtName.setText(tm.getName());
         txtAddress.setText(tm.getAddress());
         txtSalary.setText(String.valueOf(tm.getSalary()));
         btnSaveCustomer.setText("Update Customer");
-    } */
+    }
 
     private void searchCustomers(String text) {
 
@@ -92,81 +90,58 @@ public class CustomerFormController {
                     c.getSalary(),
                     btn);
             tmList.add(tm);
-            /*
             btn.setOnAction(event -> {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                         "are you sure whether do you want to delete this customer?",
                         ButtonType.YES, ButtonType.NO);
                 Optional<ButtonType> buttonType = alert.showAndWait();
                 if (buttonType.get() == ButtonType.YES) {
-                    try {
-                        if (customerBo.deleteCustomer(tm.getId())) {
-                            searchCustomers(searchText);
-                            new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
-                        } else {
-                            new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                        }
-                    }catch (ClassNotFoundException | SQLException e){
-                        e.printStackTrace();
+                    if (customerService.deleteCustomer(tm.getId())) {
+                        searchCustomers(searchText);
+                        new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
+                    } else {
+                        new Alert(Alert.AlertType.WARNING, "Try Again!").show();
                     }
-
-
                 }
             });
-
-             */
         }
         tblCustomer.setItems(tmList);
 
     }
 
     public void saveCustomerOnAction(ActionEvent actionEvent) {
-/*
         if (btnSaveCustomer.getText().equalsIgnoreCase("Save Customer")) {
-            try {
-                boolean isCustomerSaved = customerBo.saveCustomer(
-                        new CustomerDto(
-                                txtId.getText(),
-                                txtName.getText(), txtAddress.getText(),
-                                Double.parseDouble(txtSalary.getText())
-                        )
-                );
-                if (isCustomerSaved) {
-                    searchCustomers(searchText);
-                    clearFields();
-                    new Alert(Alert.AlertType.INFORMATION, "Customer Saved!").show();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                }
-
-            }catch (ClassNotFoundException | SQLException e){
-                e.printStackTrace();
+            boolean isCustomerSaved = customerService.saveCustomer(
+                    new CustomerDTO(
+                            txtId.getText(),
+                            txtName.getText(), txtAddress.getText(),
+                            Double.parseDouble(txtSalary.getText())
+                    )
+            );
+            if (isCustomerSaved) {
+                searchCustomers(searchText);
+                clearFields();
+                new Alert(Alert.AlertType.INFORMATION, "Customer Saved!").show();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
             }
 
         } else {
-
-            try {
-
-                boolean isCustomerUpdated = customerBo.updateCustomer(
-                        new CustomerDto(
-                                txtId.getText(),
-                                txtName.getText(), txtAddress.getText(),
-                                Double.parseDouble(txtSalary.getText())
-                        )
-                );
-
-                if (isCustomerUpdated) {
-                    searchCustomers(searchText);
-                    clearFields();
-                    new Alert(Alert.AlertType.INFORMATION, "Customer Updated!").show();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                }
-            }catch (ClassNotFoundException | SQLException e){
-                e.printStackTrace();
+            boolean isCustomerUpdated = customerService.updateCustomer(
+                    new CustomerDTO(
+                            txtId.getText(),
+                            txtName.getText(), txtAddress.getText(),
+                            Double.parseDouble(txtSalary.getText())
+                    )
+            );
+            if (isCustomerUpdated) {
+                searchCustomers(searchText);
+                clearFields();
+                new Alert(Alert.AlertType.INFORMATION, "Customer Updated!").show();
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
             }
         }
-        */
     }
 
     private void clearFields() {
@@ -180,7 +155,7 @@ public class CustomerFormController {
        Stage stage= (Stage)customerFormContext.getScene().getWindow();
        stage.setScene(new Scene
                (FXMLLoader.load(getClass().
-                       getResource("../view/DashboardForm.fxml"))));
+                       getResource("../resources/forms/DashboardForm.fxml"))));
     }
 
     public void newCustomerOnAction(ActionEvent actionEvent) {

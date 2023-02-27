@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface CrudDAO<T extends SuperEntity,ID extends Serializable> extends SuperDAO{
 
-    T save(T entity);
+    boolean save(T entity);
 
-    T update(T entity);
+    boolean update(T entity);
 
     void deleteByPk(ID pk);
 

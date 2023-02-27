@@ -26,20 +26,31 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
-        if(customerDAO.existByPk(customerDTO.getId()));
-        customerDAO.save(convertor.toCustomer(customerDTO));
-        return customerDTO;
+    public boolean saveCustomer(CustomerDTO customerDTO) {
+        if(customerDAO.existByPk(customerDTO.getId())) {
+            customerDAO.save(convertor.toCustomer(customerDTO));
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
-    public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
-        return null;
+    public boolean updateCustomer(CustomerDTO customerDTO) {
+        if(customerDAO.existByPk(customerDTO.getId())) {
+            customerDAO.update(convertor.toCustomer(customerDTO));
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
-    public void deleteCustomer(String pk) {
+    public boolean deleteCustomer(String pk) {
 
+        customerDAO.deleteByPk(pk);
+
+        return true;
     }
 
     @Override
@@ -57,7 +68,6 @@ public class CustomerServiceImpl implements CustomerService {
         List<CustomerDTO> list=new ArrayList<>();
         List<Customer> listc = new ArrayList<>();
         listc.addAll(customerDAO.SearchCustomersByTesxt(text));
-        System.out.println(listc.size());
         for(Customer c:listc){
             list.add(convertor.fromCustomer(c));
         }
