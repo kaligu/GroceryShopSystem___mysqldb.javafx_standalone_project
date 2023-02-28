@@ -19,6 +19,4 @@ public interface CrudDAO<T extends SuperEntity,ID extends Serializable> extends 
 
     boolean existByPk(ID pk) ;
 
-    List<T> SearchCustomersByTesxt(String text);
-
 }

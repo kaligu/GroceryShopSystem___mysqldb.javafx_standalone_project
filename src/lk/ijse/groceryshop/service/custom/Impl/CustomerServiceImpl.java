@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean saveCustomer(CustomerDTO customerDTO) {
-        if(customerDAO.existByPk(customerDTO.getId())) {
+        if(!customerDAO.existByPk(customerDTO.getId())) {
             customerDAO.save(convertor.toCustomer(customerDTO));
             return true;
         }else {
@@ -47,10 +47,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean deleteCustomer(String pk) {
-
-        customerDAO.deleteByPk(pk);
-
-        return true;
+        if(customerDAO.existByPk(pk) ){
+            customerDAO.deleteByPk(pk);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

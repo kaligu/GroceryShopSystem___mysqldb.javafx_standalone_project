@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,5 +24,4 @@ public class Customer implements SuperEntity{
     private String address;
     @Column(name = "salary")
     private double salary;
-
 }

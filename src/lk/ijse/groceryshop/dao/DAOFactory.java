@@ -1,6 +1,8 @@
 package lk.ijse.groceryshop.dao;
 
 import lk.ijse.groceryshop.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.groceryshop.dao.custom.impl.ItemDAOImpl;
+import lk.ijse.groceryshop.service.custom.Impl.ItemServiceImpl;
 import lombok.Builder;
 
 import java.sql.Connection;
@@ -15,6 +17,8 @@ public class DAOFactory {
         switch (daoTypes){
             case CUSTOMER:
                 return (T)new CustomerDAOImpl(connection);
+            case ITEM:
+                return (T)new ItemDAOImpl(connection);
             default:
                 return null;
         }

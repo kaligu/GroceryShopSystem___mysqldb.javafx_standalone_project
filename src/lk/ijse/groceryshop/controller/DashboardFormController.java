@@ -41,11 +41,11 @@ public class DashboardFormController {
     }
 
     public void openPlaceOrderFormOnAction(ActionEvent actionEvent) throws IOException {
-        setUi("PlaceOrderForm");
+        setUi("PlaceOrderForm.fxml");
     }
 
     public void openOrderDetailsFormOnAction(ActionEvent actionEvent) throws IOException {
-        setUi("OrderDetailsForm");
+        setUi("OrderDetailsForm.fxml");
     }
 
     public void openCustomerFormOnAction(ActionEvent actionEvent) throws IOException {

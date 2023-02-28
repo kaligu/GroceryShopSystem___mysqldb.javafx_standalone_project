@@ -11,7 +11,7 @@ public class DBConnection {
     public DBConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade?autoReconnect=true&useSSL=false","root","1234");
+            this.connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/thogakade","root","1234");
         }catch (ClassNotFoundException | SQLException e){
             throw new RuntimeException("Failed to load the database");
         }
