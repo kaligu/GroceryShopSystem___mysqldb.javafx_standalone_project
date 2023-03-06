@@ -110,6 +110,7 @@ public class CustomerFormController {
     }
 
     public void saveCustomerOnAction(ActionEvent actionEvent) {
+        /*
         if (btnSaveCustomer.getText().equalsIgnoreCase("Save Customer")) {
             boolean isCustomerSaved = customerService.saveCustomer(
                     new CustomerDTO(
@@ -142,6 +143,8 @@ public class CustomerFormController {
                 new Alert(Alert.AlertType.WARNING, "Try Again!").show();
             }
         }
+
+         */
     }
 
     private void clearFields() {

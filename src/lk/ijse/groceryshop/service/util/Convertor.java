@@ -6,6 +6,7 @@ import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.entity.Item;
 
 public class Convertor {
+    /*
     public CustomerDTO fromCustomer(Customer customer){
         return new CustomerDTO(customer.getId(),customer.getName(), customer.getAddress(),customer.getSalary());
     }
@@ -18,4 +19,6 @@ public class Convertor {
     public Item toItem(ItemDTO itemDTO){
         return new Item(itemDTO.getCode(),itemDTO.getDescription(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand());
     }
+
+     */
 }

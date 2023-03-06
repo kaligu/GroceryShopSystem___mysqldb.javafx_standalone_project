@@ -30,7 +30,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean saveItem(ItemDTO itemDTO) {
         if(itemDAO.existByPk(itemDTO.getCode())) {
-            itemDAO.save(convertor.toItem(itemDTO));
+           // itemDAO.save(convertor.toItem(itemDTO));
             return true;
         }else {
             return false;
@@ -40,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean updateItem(ItemDTO itemDTO) {
         if(itemDAO.existByPk(itemDTO.getCode())) {
-            itemDAO.update(convertor.toItem(itemDTO));
+           // itemDAO.update(convertor.toItem(itemDTO));
             return true;
         }else {
             return false;
@@ -73,7 +73,7 @@ public class ItemServiceImpl implements ItemService {
         List<Item> listc = new ArrayList<>();
         listc.addAll(itemDAO.SearchItemsByTesxt(text));
         for(Item c:listc){
-            list.add(convertor.fromItem(c));
+           // list.add(convertor.fromItem(c));
         }
         return  list;
     }

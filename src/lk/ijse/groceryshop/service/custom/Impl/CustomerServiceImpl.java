@@ -26,23 +26,29 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean saveCustomer(CustomerDTO customerDTO) {
+    public void saveCustomer(CustomerDTO customerDTO) {
+        /*
         if(!customerDAO.existByPk(customerDTO.getId())) {
             customerDAO.save(convertor.toCustomer(customerDTO));
             return true;
         }else {
             return false;
         }
+        */
+
     }
 
     @Override
-    public boolean updateCustomer(CustomerDTO customerDTO) {
+    public void updateCustomer(CustomerDTO customerDTO) {
+        /*
         if(customerDAO.existByPk(customerDTO.getId())) {
             customerDAO.update(convertor.toCustomer(customerDTO));
             return true;
         }else {
             return false;
         }
+
+         */
     }
 
     @Override
@@ -67,12 +73,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> searchCustomerByText(String text) {
+
         List<CustomerDTO> list=new ArrayList<>();
         List<Customer> listc = new ArrayList<>();
+        /*
         listc.addAll(customerDAO.SearchCustomersByTesxt(text));
         for(Customer c:listc){
             list.add(convertor.fromCustomer(c));
         }
+
+         */
         return  list;
     }
 }
