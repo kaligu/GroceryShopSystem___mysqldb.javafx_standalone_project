@@ -10,6 +10,17 @@
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
       </configuration>
     </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping>
+          <factory-entry name="GroceryShopSystem" value="ce2c286c-3bec-42ab-bfe1-d24bc42713fc" />
+        </datasource-mapping>
+        <naming-strategy-map />
+        <deploymentDescriptor name="orm.xml" url="file://$MODULE_DIR$/META-INF/orm.xml" />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />

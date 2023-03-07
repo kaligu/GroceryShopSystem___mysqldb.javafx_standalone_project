@@ -16,8 +16,7 @@ import java.util.Optional;
 
 public class CustomerDAOImpl implements CustomerDAO {
     private final Connection connection;
-    Session session ;
-    Transaction transaction ;
+
 
     public CustomerDAOImpl(Connection connection){
         this.connection=connection;
@@ -25,6 +24,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean save(Customer entity) {
+        Session session ;
+        Transaction transaction ;
         session = null;
         transaction = null;
         session = HbFactoryConfiguration.getInstance().getSession();
@@ -46,6 +47,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean update(Customer entity) {
+        Session session ;
+        Transaction transaction ;
         session = null;
         transaction = null;
         session = HbFactoryConfiguration.getInstance().getSession();
@@ -66,30 +69,37 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public void deleteByPk(String pk) {
+    public boolean deleteByPk(String pk) {
+        Session session ;
+        Transaction transaction ;
         session = null;
         transaction = null;
         session = HbFactoryConfiguration.getInstance().getSession();
         transaction = session.beginTransaction();
 
         try {
-            Customer c=session.get(Customer.class,pk);
+            Customer c=session.load(Customer.class,pk);  //---------load
+            session.delete(c);
             transaction.commit();
+            return true;
         } catch (HibernateException e) {
             if (session!=null)
                 transaction.rollback();
+            return false;
         } finally {
             session.close();
         }
     }
 
     @Override
-    public Optional<Customer> findByPk(String pk) {
+    public Optional<Customer> findByPk(String pk) {  //meka implement krnnh
         return Optional.empty();
     }
 
     @Override
     public boolean existByPk(String pk) {
+        Session session ;
+        Transaction transaction ;
         Customer c=null;
         session = null;
         transaction = null;
@@ -97,11 +107,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         transaction = session.beginTransaction();
 
         try {
-
-            session = null;
-            transaction = null;
-            session = HbFactoryConfiguration.getInstance().getSession();
-            transaction = session.beginTransaction();
             c = session.get(Customer.class,pk);
 
             transaction.commit();
@@ -120,29 +125,14 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public List<Customer> SearchCustomersByTesxt(String text) {
-        session = null;
-        transaction = null;
-        session = HbFactoryConfiguration.getInstance().getSession();
-        transaction = session.beginTransaction();
-
+    public List<Customer> SearchCustomersByTesxt(String text, Session session) {  //HQL wlin krnna
         List<Customer> list = new ArrayList<>();
 
         text="%"+text+"%";
 
-        try {
-
-            Criteria criteria = session.createCriteria(Customer.class)
-                    .add(Restrictions.like("name", text));
-            list.addAll(criteria.list());
-
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (session!=null)
-                transaction.rollback();
-        } finally {
-            session.close();
-        }
+        Criteria criteria = session.createCriteria(Customer.class)
+                .add(Restrictions.like("name", text));
+        list.addAll(criteria.list());
 
         return list;
         

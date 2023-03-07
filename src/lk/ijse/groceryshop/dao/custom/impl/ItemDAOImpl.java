@@ -1,7 +1,6 @@
 package lk.ijse.groceryshop.dao.custom.impl;
 
 import lk.ijse.groceryshop.dao.custom.ItemDAO;
-import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.util.HbFactoryConfiguration;
 import org.hibernate.Criteria;
@@ -66,18 +65,21 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public void deleteByPk(String pk) {
+    public boolean deleteByPk(String pk) {
         session = null;
         transaction = null;
         session = HbFactoryConfiguration.getInstance().getSession();
         transaction = session.beginTransaction();
 
         try {
-            Item c=session.get(Item.class,pk);
+            Item c=session.load(Item.class,pk);
+            session.delete(c);
             transaction.commit();
+            return true;
         } catch (HibernateException e) {
             if (session!=null)
                 transaction.rollback();
+            return false;
         } finally {
             session.close();
         }
@@ -97,11 +99,6 @@ public class ItemDAOImpl implements ItemDAO {
         transaction = session.beginTransaction();
 
         try {
-
-            session = null;
-            transaction = null;
-            session = HbFactoryConfiguration.getInstance().getSession();
-            transaction = session.beginTransaction();
             c = session.get(Item.class,pk);
 
             transaction.commit();
@@ -119,7 +116,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public Collection<? extends Item> SearchItemsByTesxt(String text) {
+    public Collection<? extends Item> SearchItemsByTesxt(String text) { //hql wlin
         session = null;
         transaction = null;
         session = HbFactoryConfiguration.getInstance().getSession();

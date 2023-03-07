@@ -122,13 +122,13 @@ public class ItemFormController {
     }
 
     public void saveItemOnAction(ActionEvent actionEvent) {
-
         if (btnSaveItem.getText().equalsIgnoreCase("Save Item")) {
-
-            boolean isItemSaved = itemService.saveItem(
-                    new ItemDTO(txtCode.getText(),
-                    txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
-                    Integer.parseInt(txtQtyOnHand.getText())));
+            ItemDTO id = new ItemDTO();
+            id.setCode(txtCode.getText());
+            id.setDescription(txtDescription.getText());
+            id.setUnitPrice(Double.parseDouble(txtUnitPrice.getText()));
+            id.setQtyOnHand(Integer.parseInt(txtQtyOnHand.getText()));
+            boolean isItemSaved = itemService.saveItem(id);
             if (isItemSaved) {
                 searchItems(searchText);
                 clearFields();
@@ -138,11 +138,12 @@ public class ItemFormController {
             }
 
         } else {
-
-            boolean isItemUpdated = itemService.updateItem(
-                    new ItemDTO(txtCode.getText(),
-                            txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
-                            Integer.parseInt(txtQtyOnHand.getText())));
+            ItemDTO iud = new ItemDTO();
+            iud.setCode(txtCode.getText());
+            iud.setDescription(txtDescription.getText());
+            iud.setUnitPrice(Double.parseDouble(txtUnitPrice.getText()));
+            iud.setQtyOnHand(Integer.parseInt(txtQtyOnHand.getText()));
+            boolean isItemUpdated = itemService.updateItem(iud);
             if (isItemUpdated) {
                 searchItems(searchText);
                 clearFields();

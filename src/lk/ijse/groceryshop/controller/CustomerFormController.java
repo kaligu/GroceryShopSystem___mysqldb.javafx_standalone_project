@@ -76,7 +76,6 @@ public class CustomerFormController {
     }
 
     private void searchCustomers(String text) {
-
         ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
 
         List<CustomerDTO> customerList= customerService.searchCustomerByText(searchText);
@@ -107,18 +106,17 @@ public class CustomerFormController {
         }
         tblCustomer.setItems(tmList);
 
+
     }
 
     public void saveCustomerOnAction(ActionEvent actionEvent) {
-        /*
         if (btnSaveCustomer.getText().equalsIgnoreCase("Save Customer")) {
-            boolean isCustomerSaved = customerService.saveCustomer(
-                    new CustomerDTO(
-                            txtId.getText(),
-                            txtName.getText(), txtAddress.getText(),
-                            Double.parseDouble(txtSalary.getText())
-                    )
-            );
+            CustomerDTO cd = new CustomerDTO();
+            cd.setId(txtId.getText());
+            cd.setName(txtName.getText());
+            cd.setAddress(txtAddress.getText());
+            cd.setSalary(Double.parseDouble(txtSalary.getText()));
+            boolean isCustomerSaved = customerService.saveCustomer(cd);
             if (isCustomerSaved) {
                 searchCustomers(searchText);
                 clearFields();
@@ -128,13 +126,12 @@ public class CustomerFormController {
             }
 
         } else {
-            boolean isCustomerUpdated = customerService.updateCustomer(
-                    new CustomerDTO(
-                            txtId.getText(),
-                            txtName.getText(), txtAddress.getText(),
-                            Double.parseDouble(txtSalary.getText())
-                    )
-            );
+            CustomerDTO ucd = new CustomerDTO();
+            ucd.setId(txtId.getText());
+            ucd.setName(txtName.getText());
+            ucd.setAddress(txtAddress.getText());
+            ucd.setSalary(Double.parseDouble(txtSalary.getText()));
+            boolean isCustomerUpdated = customerService.updateCustomer(ucd);
             if (isCustomerUpdated) {
                 searchCustomers(searchText);
                 clearFields();
@@ -143,8 +140,6 @@ public class CustomerFormController {
                 new Alert(Alert.AlertType.WARNING, "Try Again!").show();
             }
         }
-
-         */
     }
 
     private void clearFields() {

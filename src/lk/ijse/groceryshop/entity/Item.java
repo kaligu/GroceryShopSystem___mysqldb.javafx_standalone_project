@@ -1,30 +1,35 @@
 package lk.ijse.groceryshop.entity;
 
-import javafx.scene.control.Button;
 import lombok.*;
-import lombok.extern.apachecommons.CommonsLog;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ToString
 
 @Entity
-@Table(name = "Item")
-public class Item implements SuperEntity {
-    @Id @Column
+@Table(name = "item")
+public class Item implements SuperEntity{
+    @Id
+    @Column(name = "item_code")
     private String code;
-    @Column
+
+    @Column(name = "item_description")
     private String description;
-    @Column
+
+    @Column(name = "item_unit_price")
     private double unitPrice;
-    @Column
+
+    @Column(name = "item_qty_on_hand")
     private int qtyOnHand;
 
+    @OneToMany(mappedBy = "item", cascade = {
+            CascadeType.ALL
+    })
+    private List<OrderDetails> orderDetailsList= new ArrayList<>();
 }

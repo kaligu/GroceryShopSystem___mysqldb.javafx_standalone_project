@@ -8,6 +8,10 @@ import lk.ijse.groceryshop.dto.CustomerDTO;
 import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.service.util.Convertor;
+import lk.ijse.groceryshop.util.HbFactoryConfiguration;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -26,29 +30,24 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void saveCustomer(CustomerDTO customerDTO) {
-        /*
+    public boolean saveCustomer(CustomerDTO customerDTO) {
         if(!customerDAO.existByPk(customerDTO.getId())) {
-            customerDAO.save(convertor.toCustomer(customerDTO));
+           // customerDAO.save(convertor.toCustomer(customerDTO));
             return true;
         }else {
             return false;
         }
-        */
 
     }
 
     @Override
-    public void updateCustomer(CustomerDTO customerDTO) {
-        /*
+    public boolean updateCustomer(CustomerDTO customerDTO) {
         if(customerDAO.existByPk(customerDTO.getId())) {
-            customerDAO.update(convertor.toCustomer(customerDTO));
+          //  customerDAO.update(convertor.toCustomer(customerDTO));
             return true;
         }else {
             return false;
         }
-
-         */
     }
 
     @Override
@@ -73,16 +72,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> searchCustomerByText(String text) {
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
 
-        List<CustomerDTO> list=new ArrayList<>();
-        List<Customer> listc = new ArrayList<>();
-        /*
-        listc.addAll(customerDAO.SearchCustomersByTesxt(text));
-        for(Customer c:listc){
-            list.add(convertor.fromCustomer(c));
+        Session session= HbFactoryConfiguration.getInstance().getSession();
+        Transaction transaction=session.beginTransaction();
+
+        try {
+
+            customerDTOList.addAll(convertor.fromCustomerList(customerDAO.SearchCustomersByTesxt(text,session)));
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
+        } finally {
+            session.close();
         }
 
-         */
-        return  list;
+
+        return customerDTOList;
     }
 }

@@ -2,12 +2,9 @@ package lk.ijse.groceryshop.service.custom.Impl;
 
 import lk.ijse.groceryshop.dao.DAOFactory;
 import lk.ijse.groceryshop.dao.DAOTypes;
-import lk.ijse.groceryshop.dao.custom.CustomerDAO;
 import lk.ijse.groceryshop.dao.custom.ItemDAO;
 import lk.ijse.groceryshop.db.DBConnection;
-import lk.ijse.groceryshop.dto.CustomerDTO;
 import lk.ijse.groceryshop.dto.ItemDTO;
-import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.service.custom.ItemService;
 import lk.ijse.groceryshop.service.util.Convertor;
@@ -30,7 +27,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean saveItem(ItemDTO itemDTO) {
         if(itemDAO.existByPk(itemDTO.getCode())) {
-           // itemDAO.save(convertor.toItem(itemDTO));
+      //      itemDAO.save(convertor.toItem(itemDTO));
             return true;
         }else {
             return false;
@@ -40,7 +37,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean updateItem(ItemDTO itemDTO) {
         if(itemDAO.existByPk(itemDTO.getCode())) {
-           // itemDAO.update(convertor.toItem(itemDTO));
+       //     itemDAO.update(convertor.toItem(itemDTO));
             return true;
         }else {
             return false;

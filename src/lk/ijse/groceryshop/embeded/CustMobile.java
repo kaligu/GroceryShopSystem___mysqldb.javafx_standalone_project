@@ -3,6 +3,7 @@ package lk.ijse.groceryshop.embeded;
 import lombok.*;
 
 import javax.persistence.Embeddable;
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,5 +13,5 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class CustMobile {
-    private String mobileNo;
+    private String phoneNums;
 }

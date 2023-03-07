@@ -1,19 +1,15 @@
 package lk.ijse.groceryshop.dao;
 
-import lk.ijse.groceryshop.dto.CustomerDTO;
-import lk.ijse.groceryshop.entity.SuperEntity;
-
 import java.io.Serializable;
-import java.util.List;
 import java.util.Optional;
 
-public interface CrudDAO<T extends SuperEntity,ID extends Serializable> extends SuperDAO{
+public interface CrudDAO<T extends Serializable,ID extends Serializable> extends SuperDAO{
 
     boolean save(T entity);
 
     boolean update(T entity);
 
-    void deleteByPk(ID pk);
+    boolean deleteByPk(ID pk);
 
     Optional<T> findByPk(ID pk) ;
 

@@ -1,6 +1,11 @@
 package lk.ijse.groceryshop.dto;
 
+import lk.ijse.groceryshop.entity.Order;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor

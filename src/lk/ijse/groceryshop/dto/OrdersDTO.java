@@ -1,12 +1,13 @@
 package lk.ijse.groceryshop.dto;
 
-import javafx.scene.control.Button;
+import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.entity.OrderDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDTO {
-    private String code;
-    private String description;
-    private double unitPrice;
-    private int qtyOnHand;
+public class OrdersDTO {
+    private String orderId;
+
+    private String date;
+
+    private double totalCost;
+
+    private CustomerDTO customerDTO;
 }
