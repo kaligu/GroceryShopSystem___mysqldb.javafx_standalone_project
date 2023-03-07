@@ -3,26 +3,25 @@ package lk.ijse.groceryshop.entity;
 import lk.ijse.groceryshop.embeded.CustMobile;
 import lk.ijse.groceryshop.embeded.CustName;
 import lombok.*;
-import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customer")
 public class Customer implements SuperEntity{
-
-    @Id @Column(name = "id")
+    @Id
+    @Column(name = "cust_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "cust_name")
     private CustName name;
 
     @ElementCollection //hoynna
@@ -32,12 +31,14 @@ public class Customer implements SuperEntity{
     )
     private List<CustMobile> phoneNos;
 
-    @Column(name = "age" , columnDefinition = "SMALLINT")
-    private int age;
-
-    @Column(name = "address")
+    @Column(name = "cust_address")
     private String address;
 
-    @Column(name = "salary")
+    @Column(name = "cust_salary")
     private double salary;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> ordersList= new ArrayList<>();
+
 }
+
