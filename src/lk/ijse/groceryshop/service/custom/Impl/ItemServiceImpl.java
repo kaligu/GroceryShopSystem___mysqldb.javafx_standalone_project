@@ -8,6 +8,7 @@ import lk.ijse.groceryshop.dto.ItemDTO;
 import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.service.custom.ItemService;
 import lk.ijse.groceryshop.service.util.Convertor;
+import org.hibernate.Session;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean deleteItem(String pk) {
         if(itemDAO.existByPk(pk)){
-            itemDAO.deleteByPk(pk);
+           // itemDAO.deleteByPk(pk);
             return true;
         }else {
             return false;

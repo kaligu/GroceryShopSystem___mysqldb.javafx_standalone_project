@@ -4,6 +4,7 @@ import lk.ijse.groceryshop.dto.CustomerDTO;
 import lk.ijse.groceryshop.dto.ItemDTO;
 import lk.ijse.groceryshop.dto.OrderDetailsDTO;
 import lk.ijse.groceryshop.dto.OrdersDTO;
+import lk.ijse.groceryshop.embeded.CustMobile;
 import lk.ijse.groceryshop.embeded.CustName;
 import lk.ijse.groceryshop.entity.Customer;
 import lk.ijse.groceryshop.entity.Item;
@@ -15,24 +16,23 @@ import java.util.List;
 
 public class Convertor {
     public CustomerDTO fromCustomer(Customer customer){
-        return new CustomerDTO(customer.getId(),"jj", customer.getAddress(),customer.getSalary());
+        return new CustomerDTO(customer.getId(), customer.getName(),customer.getPhoneNos(), customer.getAddress(),customer.getSalary(), customer.getOrdersList());
     }
 
 
-  /*  public Customer toCustomer(CustomerDTO customerDTO){
-        CustName c  = new CustName();
-       // return new Customer(customerDTO.getId(),c,customerDTO.getAddress(),customerDTO.getSalary(),new ArrayList<>());
+    public Customer toCustomer(CustomerDTO customerDTO){
+        return new Customer(customerDTO.getId(), customerDTO.getName(),customerDTO.getPhoneNosArray(), customerDTO.getAddress(),customerDTO.getSalary(), customerDTO.getOrdersList());
     }
-
-   */
-
+/*
     public List<CustomerDTO> fromCustomerList(List<Customer> customerList){
         List<CustomerDTO> customerDTOS = new ArrayList<>();
         for (Customer c:customerList){
-            customerDTOS.add(new CustomerDTO(c.getId(),"jj", c.getAddress(),c.getSalary()));
+            customerDTOS.add(new CustomerDTO(c.getId(),c.getName(), c.getAddress(),c.getSalary(), (ArrayList<CustMobile>) c.getPhoneNos()));
         }
         return customerDTOS;
     }
+
+ */
 /*
     private List<Order> toOrderList(List<OrdersDTO> ordersDTOS) {
         List<Order> orders = new ArrayList<>();

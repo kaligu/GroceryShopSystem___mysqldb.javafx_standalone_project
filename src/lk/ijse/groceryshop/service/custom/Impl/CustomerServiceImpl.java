@@ -16,12 +16,16 @@ import org.hibernate.Transaction;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerDAO customerDAO;
     private final Convertor convertor;
     private final Connection connection;
+    private Session session;
+    private Transaction transaction;
+
 
     public CustomerServiceImpl(){
         connection= DBConnection.getDbcConnection().getConnection();
@@ -31,32 +35,61 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean saveCustomer(CustomerDTO customerDTO) {
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
         if(!customerDAO.existByPk(customerDTO.getId())) {
-           // customerDAO.save(convertor.toCustomer(customerDTO));
-            return true;
+
+            try {
+                customerDAO.save(convertor.toCustomer(customerDTO));
+                transaction.commit();
+                return true;
+            } catch (HibernateException e) {
+                if (session!=null)
+                    transaction.rollback();
+                return false;
+            } finally {
+                session.close();
+            }
+
         }else {
             return false;
         }
+
+
 
     }
 
     @Override
     public boolean updateCustomer(CustomerDTO customerDTO) {
-        if(customerDAO.existByPk(customerDTO.getId())) {
-          //  customerDAO.update(convertor.toCustomer(customerDTO));
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+        try {
+            customerDAO.update(convertor.toCustomer(customerDTO),session);
+            transaction.commit();
             return true;
-        }else {
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
             return false;
+        } finally {
+            session.close();
         }
     }
 
     @Override
     public boolean deleteCustomer(String pk) {
-        if(customerDAO.existByPk(pk) ){
-            customerDAO.deleteByPk(pk);
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+        try {
+            customerDAO.deleteByPk(pk,session);
+            transaction.commit();
             return true;
-        }else {
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
             return false;
+        } finally {
+            session.close();
         }
     }
 
@@ -72,14 +105,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> searchCustomerByText(String text) {
-        List<CustomerDTO> customerDTOList = new ArrayList<>();
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
 
-        Session session= HbFactoryConfiguration.getInstance().getSession();
-        Transaction transaction=session.beginTransaction();
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
 
         try {
 
-            customerDTOList.addAll(convertor.fromCustomerList(customerDAO.SearchCustomersByTesxt(text,session)));
+            customerDTOList= customerDAO.SearchCustomersByTesxt(text,session).stream().map(customer -> convertor.fromCustomer(customer)).collect(Collectors.toList());
 
             transaction.commit();
         } catch (HibernateException e) {
@@ -91,5 +124,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         return customerDTOList;
+
+
     }
 }

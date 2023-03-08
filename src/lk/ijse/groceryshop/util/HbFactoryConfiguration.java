@@ -1,9 +1,6 @@
 package lk.ijse.groceryshop.util;
 
-import lk.ijse.groceryshop.entity.Customer;
-import lk.ijse.groceryshop.entity.Item;
-import lk.ijse.groceryshop.entity.Order;
-import lk.ijse.groceryshop.entity.OrderDetails;
+import lk.ijse.groceryshop.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -45,7 +45,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public boolean update(Item entity) {
+    public boolean update(Item entity , Session session) {
         session = null;
         transaction = null;
         session = HbFactoryConfiguration.getInstance().getSession();
@@ -65,11 +65,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public boolean deleteByPk(String pk) {
-        session = null;
-        transaction = null;
-        session = HbFactoryConfiguration.getInstance().getSession();
-        transaction = session.beginTransaction();
+    public boolean deleteByPk(String pk, Session session) {
 
         try {
             Item c=session.load(Item.class,pk);

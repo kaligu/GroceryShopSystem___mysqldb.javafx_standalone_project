@@ -4,16 +4,15 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lk.ijse.groceryshop.dto.CustomerDTO;
+import lk.ijse.groceryshop.embeded.CustMobile;
+import lk.ijse.groceryshop.embeded.CustName;
 import lk.ijse.groceryshop.entity.Customer;
-import lk.ijse.groceryshop.service.ServiceFactory;
-import lk.ijse.groceryshop.service.ServiceTypes;
-import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.util.HbFactoryConfiguration;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AppInitializer extends Application {
 
@@ -24,6 +23,7 @@ public class AppInitializer extends Application {
     public void start(Stage primaryStage) {
         Session session= HbFactoryConfiguration.getInstance().getSession();
         Transaction transaction=session.beginTransaction();
+
         try {
             primaryStage.setScene(new Scene(
                     FXMLLoader.load(
@@ -38,26 +38,15 @@ public class AppInitializer extends Application {
 
 
 
-      //  Session session = HbFactoryConfiguration.getInstance().getSession();
-     //   Transaction transaction = session.beginTransaction();
+
 
 
         //save customer object
-/*
-        ArrayList<CustMobile> cutsMobileNos = new ArrayList<>();
-        cutsMobileNos.add(new CustMobile("076644434"));
-        cutsMobileNos.add(new CustMobile("072434544"));
 
-        Customer c = new Customer();
-        c.setId("C001");
-        c.setName(new CustName("Chethiya","Kaligu","Jayanath"));
-        c.setAge(20);
-        c.setAddress("Horana");
-        c.setSalary(233333);
-        c.setPhoneNos(cutsMobileNos);
-        session.save(c);
 
- */
+
+
+
 
 
 

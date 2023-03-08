@@ -46,48 +46,24 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean update(Customer entity) {
-        Session session ;
-        Transaction transaction ;
-        session = null;
-        transaction = null;
-        session = HbFactoryConfiguration.getInstance().getSession();
-        transaction = session.beginTransaction();
-
+    public boolean update(Customer entity , Session session) {
         try {
             session.update(entity);
-            transaction.commit();
             return true;
         } catch (HibernateException e) {
-            if (session!=null)
-                transaction.rollback();
             return false;
-        } finally {
-            session.close();
         }
 
     }
 
     @Override
-    public boolean deleteByPk(String pk) {
-        Session session ;
-        Transaction transaction ;
-        session = null;
-        transaction = null;
-        session = HbFactoryConfiguration.getInstance().getSession();
-        transaction = session.beginTransaction();
-
+    public boolean deleteByPk(String pk, Session session) {
         try {
             Customer c=session.load(Customer.class,pk);  //---------load
             session.delete(c);
-            transaction.commit();
             return true;
         } catch (HibernateException e) {
-            if (session!=null)
-                transaction.rollback();
             return false;
-        } finally {
-            session.close();
         }
     }
 
@@ -126,13 +102,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public List<Customer> SearchCustomersByTesxt(String text, Session session) {  //HQL wlin krnna
+
         List<Customer> list = new ArrayList<>();
 
         text="%"+text+"%";
 
         Criteria criteria = session.createCriteria(Customer.class)
-                .add(Restrictions.like("name", text));
+                .add(Restrictions.like("id", text));
         list.addAll(criteria.list());
+
+        System.out.println(list+"");
 
         return list;
         
