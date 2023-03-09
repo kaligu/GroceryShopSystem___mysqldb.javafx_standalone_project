@@ -40,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
         if(!customerDAO.existByPk(customerDTO.getId())) {
 
             try {
-                customerDAO.save(convertor.toCustomer(customerDTO));
+                customerDAO.save(convertor.toCustomer(customerDTO) , session);
                 transaction.commit();
                 return true;
             } catch (HibernateException e) {
@@ -54,8 +54,6 @@ public class CustomerServiceImpl implements CustomerService {
         }else {
             return false;
         }
-
-
 
     }
 
@@ -122,9 +120,6 @@ public class CustomerServiceImpl implements CustomerService {
             session.close();
         }
 
-
         return customerDTOList;
-
-
     }
 }

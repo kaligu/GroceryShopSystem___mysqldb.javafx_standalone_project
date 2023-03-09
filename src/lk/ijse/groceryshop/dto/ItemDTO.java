@@ -19,4 +19,5 @@ public class ItemDTO {
     private String description;
     private double unitPrice;
     private int qtyOnHand;
+    private List<OrderDetails> orderDetailsList= new ArrayList<>();
 }

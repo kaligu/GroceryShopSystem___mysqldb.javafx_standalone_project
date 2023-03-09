@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import lk.ijse.groceryshop.embeded.CustMobile;
 import lk.ijse.groceryshop.embeded.CustName;
 import lk.ijse.groceryshop.entity.Customer;
+import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.util.HbFactoryConfiguration;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,8 +35,6 @@ public class AppInitializer extends Application {
             e.printStackTrace();
         }
         primaryStage.show();
-
-
 
 
 

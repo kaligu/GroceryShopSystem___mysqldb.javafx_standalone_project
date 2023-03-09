@@ -4,20 +4,27 @@ import lk.ijse.groceryshop.dao.DAOFactory;
 import lk.ijse.groceryshop.dao.DAOTypes;
 import lk.ijse.groceryshop.dao.custom.ItemDAO;
 import lk.ijse.groceryshop.db.DBConnection;
+import lk.ijse.groceryshop.dto.CustomerDTO;
 import lk.ijse.groceryshop.dto.ItemDTO;
 import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.service.custom.ItemService;
 import lk.ijse.groceryshop.service.util.Convertor;
+import lk.ijse.groceryshop.util.HbFactoryConfiguration;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemServiceImpl implements ItemService {
     private final ItemDAO itemDAO;
     private final Convertor convertor;
     private final Connection connection;
+    private Session session;
+    private Transaction transaction;
 
     public ItemServiceImpl(){
         connection= DBConnection.getDbcConnection().getConnection();
@@ -27,9 +34,20 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public boolean saveItem(ItemDTO itemDTO) {
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
         if(itemDAO.existByPk(itemDTO.getCode())) {
-      //      itemDAO.save(convertor.toItem(itemDTO));
-            return true;
+            try {
+                itemDAO.save(convertor.toItem(itemDTO) , session);
+                transaction.commit();
+                return true;
+            } catch (HibernateException e) {
+                if (session!=null)
+                    transaction.rollback();
+                return false;
+            } finally {
+                session.close();
+            }
         }else {
             return false;
         }
@@ -37,9 +55,20 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public boolean updateItem(ItemDTO itemDTO) {
-        if(itemDAO.existByPk(itemDTO.getCode())) {
-       //     itemDAO.update(convertor.toItem(itemDTO));
-            return true;
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+        if(true) {
+            try {
+                itemDAO.update(convertor.toItem(itemDTO) , session);
+                transaction.commit();
+                return true;
+            } catch (HibernateException e) {
+                if (session!=null)
+                    transaction.rollback();
+                return false;
+            } finally {
+                session.close();
+            }
         }else {
             return false;
         }
@@ -47,12 +76,24 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public boolean deleteItem(String pk) {
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
         if(itemDAO.existByPk(pk)){
-           // itemDAO.deleteByPk(pk);
-            return true;
+            try {
+                itemDAO.deleteByPk(pk,session);
+                transaction.commit();
+                return true;
+            } catch (HibernateException e) {
+                if (session!=null)
+                    transaction.rollback();
+                return false;
+            } finally {
+                session.close();
+            }
         }else {
             return false;
         }
+
     }
 
     @Override
@@ -67,12 +108,24 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDTO> searchCustomerByText(String text) {
-        List<ItemDTO> list=new ArrayList<>();
-        List<Item> listc = new ArrayList<>();
-        listc.addAll(itemDAO.SearchItemsByTesxt(text));
-        for(Item c:listc){
-           // list.add(convertor.fromItem(c));
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+
+        List<ItemDTO> itemDTOList = new ArrayList<>();
+
+        try {
+
+            itemDTOList = itemDAO.SearchItemsByTesxt(text,session).stream().map(item -> convertor.fromItem(item)).collect(Collectors.toList());
+
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
+        } finally {
+            session.close();
         }
-        return  list;
+
+        return itemDTOList;
+
     }
 }

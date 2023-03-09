@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CrudDAO<T extends Serializable,ID extends Serializable> extends SuperDAO{
 
-    boolean save(T entity);
+    boolean save(T entity , Session session);
 
     boolean update(T entity, Session session);
 

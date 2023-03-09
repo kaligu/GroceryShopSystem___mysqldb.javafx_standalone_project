@@ -23,6 +23,14 @@ public class Convertor {
     public Customer toCustomer(CustomerDTO customerDTO){
         return new Customer(customerDTO.getId(), customerDTO.getName(),customerDTO.getPhoneNosArray(), customerDTO.getAddress(),customerDTO.getSalary(), customerDTO.getOrdersList());
     }
+
+    public Item toItem(ItemDTO itemDTO){
+        return new Item(itemDTO.getCode(),itemDTO.getDescription(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand(),itemDTO.getOrderDetailsList());
+    }
+
+    public ItemDTO fromItem(Item item){
+        return new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand(),item.getOrderDetailsList());
+    }
 /*
     public List<CustomerDTO> fromCustomerList(List<Customer> customerList){
         List<CustomerDTO> customerDTOS = new ArrayList<>();

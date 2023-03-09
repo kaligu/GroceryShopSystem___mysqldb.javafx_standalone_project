@@ -205,7 +205,6 @@ public class CustomerFormController {
     }
 
     public void newCustomerOnAction(ActionEvent actionEvent) {
-        clearFields();
         btnSaveCustomer.setText("Save Customer");
     }
 

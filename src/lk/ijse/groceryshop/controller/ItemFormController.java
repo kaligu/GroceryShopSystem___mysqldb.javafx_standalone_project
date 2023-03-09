@@ -118,6 +118,7 @@ public class ItemFormController {
     }
 
     public void newItemOnAction(ActionEvent actionEvent) {
+        clearFields();
         btnSaveItem.setText("Save Item");
     }
 

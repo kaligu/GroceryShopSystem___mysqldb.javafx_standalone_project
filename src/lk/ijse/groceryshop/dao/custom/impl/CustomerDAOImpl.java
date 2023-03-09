@@ -23,24 +23,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean save(Customer entity) {
-        Session session ;
-        Transaction transaction ;
-        session = null;
-        transaction = null;
-        session = HbFactoryConfiguration.getInstance().getSession();
-        transaction = session.beginTransaction();
-
+    public boolean save(Customer entity , Session session) {
         try {
             session.save(entity);
-            transaction.commit();
             return true;
         } catch (HibernateException e) {
-            if (session!=null)
-                transaction.rollback();
             return false;
-        } finally {
-            session.close();
         }
 
     }
