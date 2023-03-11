@@ -122,4 +122,21 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerDTOList;
     }
+
+    @Override
+    public List<String> SearchCustomerAllIds() {
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+
+        try{
+            return customerDAO.SearchCustomerAllIds(session);
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
+            return null;
+        } finally {
+            session.close();
+        }
+
+    }
 }

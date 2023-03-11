@@ -128,4 +128,20 @@ public class ItemServiceImpl implements ItemService {
         return itemDTOList;
 
     }
+
+    @Override
+    public List<String> SearchItemAllIds() {
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+
+        try{
+            return itemDAO.SearchItemAllIds(session);
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
+            return null;
+        } finally {
+            session.close();
+        }
+    }
 }

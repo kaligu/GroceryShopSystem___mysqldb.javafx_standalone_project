@@ -10,6 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.groceryshop.service.ServiceFactory;
+import lk.ijse.groceryshop.service.ServiceTypes;
+import lk.ijse.groceryshop.service.custom.CustomerService;
+import lk.ijse.groceryshop.service.custom.ItemService;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -42,6 +46,9 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     public TextField txtOrderId;
     public AnchorPane placeOrderFormContext;
+    private CustomerService customerService= ServiceFactory.getInstance().getService(ServiceTypes.CUSTOMER);
+    private ItemService itemService= ServiceFactory.getInstance().getService(ServiceTypes.ITEM);
+
 
     public void initialize(){
 
@@ -51,12 +58,12 @@ public class PlaceOrderFormController {
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         colOption.setCellValueFactory(new PropertyValueFactory<>("btn"));
-/*
+
         setDateAndOrderId();
         loadAllCustomerIds();
         loadAllItemCodes();
-        setOrderId();
-
+         setOrderId();
+/*
         cmbCustomerIds.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -78,6 +85,7 @@ public class PlaceOrderFormController {
     }
 
     private void setOrderId() {
+        txtOrderId.setText("D-"+"100");
         /*
         try{
 
@@ -141,53 +149,29 @@ public class PlaceOrderFormController {
             e.printStackTrace();
         }
     }
+    */
 
     private void loadAllItemCodes() {
-        try{
-
-
-            String sql = "SELECT code FROM Item";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
-
-            ArrayList<String> idList = new ArrayList<>();
-            while (set.next()){
-                idList.add(set.getString(1));
-            }
-            ObservableList<String> obList=FXCollections.observableArrayList(idList);
-            cmbItemCodes.setItems(obList);
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        ObservableList<String> obList=FXCollections.observableArrayList(itemService.SearchItemAllIds());
+        cmbItemCodes.setItems(obList);
     }
 
+/*
+
+ */
     private void loadAllCustomerIds() {
-
-        try{
-
-String sql="SELECT id  FROM Customer";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
-
-            ArrayList<String> idList = new ArrayList<>();
-            while (set.next()){
-                idList.add(set.getString(1));
-            }
-            ObservableList<String> obList=FXCollections.observableArrayList(idList);
-            cmbCustomerIds.setItems(obList);
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        ObservableList<String> oblist = FXCollections.observableArrayList();
+        oblist.setAll(customerService.SearchCustomerAllIds());
+        cmbCustomerIds.setItems(oblist);
     }
     
- */
+
 
     private void setDateAndOrderId() {
-        // set Date
-        /*Date date = new Date();
+        Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String d =df.format(date);
-        txtDate.setText(d);*/
+        txtDate.setText(d);
         txtDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
 /*

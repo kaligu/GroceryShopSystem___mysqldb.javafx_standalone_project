@@ -78,4 +78,9 @@ public class ItemDAOImpl implements ItemDAO {
 
         return list;
     }
+
+    @Override
+    public List<String> SearchItemAllIds(Session session) {
+        return session.createQuery("select i.id from Item i").list();
+    }
 }

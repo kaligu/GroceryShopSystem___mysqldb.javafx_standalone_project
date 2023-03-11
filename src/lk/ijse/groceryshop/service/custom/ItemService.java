@@ -4,6 +4,7 @@ import lk.ijse.groceryshop.dao.CrudDAO;
 import lk.ijse.groceryshop.dto.CustomerDTO;
 import lk.ijse.groceryshop.dto.ItemDTO;
 import lk.ijse.groceryshop.service.SuperService;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface ItemService extends SuperService {
     public ItemDTO findCustomerByPk(String pk);
 
     public List<ItemDTO> searchCustomerByText(String text);
+
+    List<String> SearchItemAllIds();
 }

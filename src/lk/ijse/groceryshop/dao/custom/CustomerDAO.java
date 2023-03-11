@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface CustomerDAO extends CrudDAO<Customer,String> {
     List<Customer> SearchCustomersByTesxt(String text, Session session);
+
+    List<String> SearchCustomerAllIds(Session session);
 }

@@ -104,4 +104,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         return list;
         
     }
+
+    @Override
+    public List<String> SearchCustomerAllIds(Session session) {
+        return session.createQuery("select c.id from Customer c").list();
+    }
 }
