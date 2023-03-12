@@ -98,7 +98,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO findCustomerByPk(String pk) {
-        return null;
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+
+        return new CustomerDTO(convertor.fromCustomer(customerDAO.findByPk(pk,session)));
     }
 
     @Override

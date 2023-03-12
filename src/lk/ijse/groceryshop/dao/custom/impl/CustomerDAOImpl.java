@@ -2,6 +2,7 @@ package lk.ijse.groceryshop.dao.custom.impl;
 
 import lk.ijse.groceryshop.dao.custom.CustomerDAO;
 import lk.ijse.groceryshop.entity.Customer;
+import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.util.HbFactoryConfiguration;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -56,8 +57,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public Optional<Customer> findByPk(String pk) {  //meka implement krnnh
-        return Optional.empty();
+    public Customer findByPk(String pk, Session session) {  //meka implement krnnh
+        try{
+            return session.get(Customer.class,pk);
+        }catch(HibernateException e){
+            throw new RuntimeException("Failed to find the Item");
+        }
     }
 
     @Override

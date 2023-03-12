@@ -14,6 +14,7 @@ import lk.ijse.groceryshop.service.ServiceFactory;
 import lk.ijse.groceryshop.service.ServiceTypes;
 import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.service.custom.ItemService;
+import lk.ijse.groceryshop.view.tm.CartTm;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -36,7 +37,7 @@ public class PlaceOrderFormController {
     public TextField txtUnitPrice;
     public TextField txtQtyOnHand;
     public TextField txtQty;
- //   public TableView<CartTm> tblCart;
+    public TableView<CartTm> tblCart;
     public TableColumn colCode;
     public TableColumn colDescription;
     public TableColumn colUnitPrice;

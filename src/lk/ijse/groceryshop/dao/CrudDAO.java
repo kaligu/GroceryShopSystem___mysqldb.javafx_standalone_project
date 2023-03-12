@@ -13,7 +13,7 @@ public interface CrudDAO<T extends Serializable,ID extends Serializable> extends
 
     boolean deleteByPk(ID pk, Session session);
 
-    Optional<T> findByPk(ID pk) ;
+    T findByPk(ID pk, Session session) ;
 
     boolean existByPk(ID pk) ;
 

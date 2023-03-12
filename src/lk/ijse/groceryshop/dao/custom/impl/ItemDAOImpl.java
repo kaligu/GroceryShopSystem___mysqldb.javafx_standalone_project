@@ -54,8 +54,12 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public Optional<Item> findByPk(String pk) {
-        return Optional.empty();
+    public Item findByPk(String pk,Session session) {
+        try{
+            return session.get(Item.class,pk);
+        }catch(HibernateException e){
+            throw new RuntimeException("Failed to find the Item");
+        }
     }
 
     @Override
