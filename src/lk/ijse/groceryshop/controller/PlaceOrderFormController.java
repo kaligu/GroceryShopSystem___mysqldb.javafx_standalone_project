@@ -10,10 +10,21 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.groceryshop.dto.CustomerDTO;
+import lk.ijse.groceryshop.dto.ItemDTO;
+import lk.ijse.groceryshop.dto.OrdersDTO;
+import lk.ijse.groceryshop.dto.PlaceOrderDTO;
+import lk.ijse.groceryshop.entity.Customer;
+import lk.ijse.groceryshop.entity.Item;
+import lk.ijse.groceryshop.entity.Order;
+import lk.ijse.groceryshop.modal.ItemDetails;
+import lk.ijse.groceryshop.modal.OrderDetails;
 import lk.ijse.groceryshop.service.ServiceFactory;
 import lk.ijse.groceryshop.service.ServiceTypes;
 import lk.ijse.groceryshop.service.custom.CustomerService;
 import lk.ijse.groceryshop.service.custom.ItemService;
+import lk.ijse.groceryshop.service.custom.OrderService;
+import lk.ijse.groceryshop.service.custom.PlaceOrderService;
 import lk.ijse.groceryshop.view.tm.CartTm;
 
 import java.io.IOException;
@@ -47,9 +58,13 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     public TextField txtOrderId;
     public AnchorPane placeOrderFormContext;
+    public TextField txtLName;
+    public TextField txtMName;
+    public TextField txtFName;
     private CustomerService customerService= ServiceFactory.getInstance().getService(ServiceTypes.CUSTOMER);
     private ItemService itemService= ServiceFactory.getInstance().getService(ServiceTypes.ITEM);
-
+    private PlaceOrderService placeOrderService= ServiceFactory.getInstance().getService(ServiceTypes.PLACEORDER);
+    private OrderService orderService= ServiceFactory.getInstance().getService(ServiceTypes.ORDER);
 
     public void initialize(){
 
@@ -64,7 +79,7 @@ public class PlaceOrderFormController {
         loadAllCustomerIds();
         loadAllItemCodes();
          setOrderId();
-/*
+
         cmbCustomerIds.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -82,75 +97,35 @@ public class PlaceOrderFormController {
                 });
 
 
- */
     }
 
     private void setOrderId() {
-        txtOrderId.setText("D-"+"100");
-        /*
-        try{
-
-            String sql = "SELECT orderId FROM `Order` ORDER BY orderId DESC LIMIT 1"; // 10 not working... (UNSIGNED)
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
-            if (set.next()){
-                String tempOrderId=set.getString(1);
-                String[] array = tempOrderId.split("-");//[D,3]
-                int tempNumber=Integer.parseInt(array[1]);
-                int finalizeOrderId=tempNumber+1;
-                txtOrderId.setText("D-"+finalizeOrderId);
-            }else {
-                txtOrderId.setText("D-1");
-            }
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
+        if (orderService.getLastorderID().equals("null")){
+            txtOrderId.setText("O-1");
+        }else {
+            String tempOrderId=orderService.getLastorderID();
+            String[] array = tempOrderId.split("-");
+            int tempNumber=Integer.parseInt(array[1]);
+            int finalizeOrderId=tempNumber+1;
+            txtOrderId.setText("O-"+finalizeOrderId);
         }
-        
-         */
-
     }
+
     private void setItemDetails() {
-/*
-        try{
-
-
-            String sql = "SELECT * FROM Item WHERE code=?";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setString(1,cmbItemCodes.getValue());
-            ResultSet set = statement.executeQuery();
-            if (set.next()){
-                txtDescription.setText(set.getString(2));
-                txtUnitPrice.setText(String.valueOf(set.getDouble(3)));
-                txtQtyOnHand.setText(String.valueOf(set.getInt(4)));
-            }
-
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
-        
- */
+        ItemDTO i = itemService.findItemByPk(cmbItemCodes.getValue());
+        txtDescription.setText(i.getDescription());
+        txtUnitPrice.setText(String.valueOf(i.getUnitPrice()));
+        txtQtyOnHand.setText(String.valueOf(i.getQtyOnHand()));
     }
-/*
+
     private void setCustomerDetails() {
-
-        try{
-
-
-            String sql = "SELECT * FROM Customer WHERE id=?";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setString(1,cmbCustomerIds.getValue());
-            ResultSet set = statement.executeQuery();
-            if (set.next()){
-                txtName.setText(set.getString(2));
-                txtAddress.setText(set.getString(3));
-                txtSalary.setText(String.valueOf(set.getInt(4)));
-            }
-
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        CustomerDTO c =customerService.findCustomerByPk(cmbCustomerIds.getValue());
+        txtFName.setText(c.getName().getFName());
+        txtMName.setText(c.getName().getMName());
+        txtLName.setText(c.getName().getLName());
+        txtAddress.setText(c.getAddress());
+        txtSalary.setText(String.valueOf(c.getSalary()));
     }
-    */
 
     private void loadAllItemCodes() {
         ObservableList<String> obList=FXCollections.observableArrayList(itemService.SearchItemAllIds());
@@ -175,33 +150,17 @@ public class PlaceOrderFormController {
         txtDate.setText(d);
         txtDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
-/*
+
     private boolean checkQty(String code, int qty){
-
-        try{
-
-
-            String sql = "SELECT qtyOnHand FROM Item WHERE code=?";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setString(1,code);
-            ResultSet set = statement.executeQuery();
-
-            if (set.next()){
-                int tempQty=set.getInt(1);
-                if (tempQty>=qty){
-                    return true;
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
-            }
-
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
+        int q;
+        q=itemService.findItemByPk(code).getQtyOnHand();
+        if (q>=qty){
+            return true;
+        }else{
+            return false;
         }
-        return false;
     }
+
     ObservableList<CartTm> obList = FXCollections.observableArrayList();
     public void addToCartOnAction(ActionEvent actionEvent) {
 
@@ -283,118 +242,34 @@ public class PlaceOrderFormController {
         lblTotal.setText(String.valueOf(total));
     }
     
- */
+
 
     public void placeOrderOnAction(ActionEvent actionEvent) throws SQLException {
-        /*
         if (obList.isEmpty()) return;
-        ArrayList<ItemDetails> details= new ArrayList<>();
+        ArrayList<lk.ijse.groceryshop.modal.OrderDetails> details= new ArrayList<>();
         for (CartTm tm:obList
              ) {
-            details.add(new ItemDetails(tm.getCode(),
-                    tm.getUnitPrice(), tm.getQty()));
+            details.add(new OrderDetails(
+                    tm.getQty(),
+                    tm.getCode()
+            ));
         }
-        Order order= new Order(
-                txtOrderId.getText(),new Date(),
+        PlaceOrderDTO order= new PlaceOrderDTO(
+                txtOrderId.getText(),  //order id
+                txtDate.getText(),
                 Double.parseDouble(lblTotal.getText()),
-                cmbCustomerIds.getValue(),details
+                cmbCustomerIds.getValue(),
+                details
         );
 
-// place Order
-        Connection con=null;
-        try{
-
-            con = DBConnection.getInstance().getConnection();
-            con.setAutoCommit(false);
-
-            String sql = "INSERT `Order` VALUES(?,?,?,?)";
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setString(1,order.getOrderId());
-            statement.setString(2,txtDate.getText());
-            statement.setDouble(3,order.getTotalCost());
-            statement.setString(4,order.getCustomer());
-
-            boolean isOrderSaved = statement.executeUpdate()>0;
-            if (isOrderSaved){
-                boolean isAllUpdated = manageQty(details);
-                if (isAllUpdated){
-                    con.commit();
-                    new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!").show();
-                    clearAll();
-                }else{
-                    con.setAutoCommit(true);
-                    con.rollback();
-                    new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-                }
-
-            }else{
-                con.setAutoCommit(true);
-                con.rollback();
-                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-            }
-
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }finally {
-            con.setAutoCommit(true);
-        }
-        
-         
-         
-         */
-    }
-
-   /* private boolean manageQty(ArrayList<ItemDetails> details) {
-
-        try{
-
-            for (ItemDetails d:details
-            ) {
-
-
-                String sql = "INSERT `Order Details` VALUES(?,?,?,?)";
-                PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-                statement.setString(1,d.getCode());
-                statement.setString(2,txtOrderId.getText());
-                statement.setDouble(3,d.getUnitPrice());
-                statement.setInt(4,d.getQty());
-
-                boolean isOrderDetailsSaved = statement.executeUpdate()>0;
-
-                if (isOrderDetailsSaved){
-                    boolean isQtyUpdated = update(d);
-                    if (!isQtyUpdated){
-                        return false;
-                    }
-                }else{
-                    return false;
-                }
-
-
-            }
-
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
-
-
-        return true;
-    }
-
-    private boolean update(ItemDetails d) {
-        try{
-
-            String sql = "UPDATE Item SET qtyOnHand=(qtyOnHand-?) WHERE code=?";
-            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setInt(1,d.getQty());
-            statement.setString(2,d.getCode());
-            return statement.executeUpdate()>0;
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-            return false;
+        boolean isplaced = placeOrderService.PlaceAOrder(order);
+        if(isplaced){
+            new Alert(Alert.AlertType.CONFIRMATION, "Order Placed!").show();
+            clearAll();
+        }else{
+            new Alert(Alert.AlertType.WARNING, "Try Again!").show();
         }
     }
-
 
     private void clearAll() {
         obList.clear();
@@ -404,16 +279,14 @@ public class PlaceOrderFormController {
         txtAddress.clear();
         txtSalary.clear();
 
-        //=======
         cmbCustomerIds.setValue(null);
         cmbItemCodes.setValue(null);
-        //========
 
         clearFields();
         cmbCustomerIds.requestFocus();
         setOrderId();
     }
-*/
+
     public void backToHomeOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage= (Stage) placeOrderFormContext.getScene().getWindow();
         stage.setScene(new Scene
@@ -421,6 +294,4 @@ public class PlaceOrderFormController {
                         getResource("../resources/forms/DashboardForm.fxml"))));
     }
 
-    public void addToCartOnAction(ActionEvent actionEvent) {
-    }
 }

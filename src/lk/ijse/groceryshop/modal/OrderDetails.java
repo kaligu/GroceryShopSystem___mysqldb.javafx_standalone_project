@@ -1,4 +1,4 @@
-package lk.ijse.groceryshop.dto;
+package lk.ijse.groceryshop.modal;
 
 import lk.ijse.groceryshop.entity.Item;
 import lk.ijse.groceryshop.entity.Order;
@@ -7,19 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetailsDTO {
-    private long id;
-
+public class OrderDetails {
     private int qty;
 
-    private Order order;
-
-    private Item item;
+    private String itemPk;
 }

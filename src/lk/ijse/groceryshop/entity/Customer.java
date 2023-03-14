@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+
 
 @Entity
 @Table(name = "customer")
@@ -40,5 +40,18 @@ public class Customer implements SuperEntity{
     @OneToMany(mappedBy = "customer")
     private List<Order> ordersList= new ArrayList<>();
 
+    public Customer(String value) {
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id='" + id + '\'' +
+                ", name=" + name +
+                ", phoneNos=" + phoneNos +
+                ", address='" + address + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
 }
 

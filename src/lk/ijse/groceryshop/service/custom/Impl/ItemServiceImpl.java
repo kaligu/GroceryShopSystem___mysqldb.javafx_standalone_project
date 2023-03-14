@@ -102,12 +102,24 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDTO findCustomerByPk(String pk) {
-        return null;
+    public ItemDTO findItemByPk(String pk) {
+        session= HbFactoryConfiguration.getInstance().getSession();
+        transaction=session.beginTransaction();
+        ItemDTO id=null;
+        try {
+            id = (convertor.fromItem(itemDAO.findByPk(pk,session)));
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+        return id;
     }
 
     @Override
-    public List<ItemDTO> searchCustomerByText(String text) {
+    public List<ItemDTO> searchItemByText(String text) {
         session= HbFactoryConfiguration.getInstance().getSession();
         transaction=session.beginTransaction();
 

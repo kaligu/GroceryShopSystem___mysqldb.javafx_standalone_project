@@ -2,5 +2,8 @@ package lk.ijse.groceryshop.service;
 
 public enum ServiceTypes {
     CUSTOMER ,
-    ITEM
+    ITEM,
+    ORDER,
+    ORDERDETAILS,
+    PLACEORDER
 }

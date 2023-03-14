@@ -17,9 +17,10 @@ public interface ItemService extends SuperService {
 
     public List<ItemDTO> findAllItems();
 
-    public ItemDTO findCustomerByPk(String pk);
+    public ItemDTO findItemByPk(String pk);
 
-    public List<ItemDTO> searchCustomerByText(String text);
+    public List<ItemDTO> searchItemByText(String text);
 
     List<String> SearchItemAllIds();
+
 }

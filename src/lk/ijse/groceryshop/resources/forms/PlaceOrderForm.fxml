@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="placeOrderFormContext" prefHeight="636.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groceryshop.controller.PlaceOrderFormController">
    <children>
       <JFXButton buttonType="RAISED" layoutX="22.0" layoutY="14.0" onAction="#backToHomeOnAction" style="-fx-background-color: #34495e;" text="Back to Home" textFill="WHITE">
@@ -28,7 +27,7 @@
          </font>
       </Label>
       <Separator layoutX="180.0" layoutY="42.0" prefHeight="5.0" prefWidth="602.0" />
-      <TextField fx:id="txtOrderId" disable="true" editable="false" layoutX="22.0" layoutY="68.0" promptText="Order Id">
+      <TextField fx:id="txtOrderId" focusTraversable="false" layoutX="22.0" layoutY="68.0" promptText="Order Id">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -44,7 +43,7 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbCustomerIds" layoutX="22.0" layoutY="161.0" prefWidth="150.0" promptText="Customer Id" />
-      <TextField fx:id="txtName" disable="true" editable="false" layoutX="181.0" layoutY="161.0" promptText="Name">
+      <TextField fx:id="txtFName" disable="true" editable="false" layoutX="181.0" layoutY="129.0" promptText="First Name">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -121,5 +120,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <TextField fx:id="txtMName" disable="true" editable="false" layoutX="181.0" layoutY="168.0" promptText="Mid Name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtLName" disable="true" editable="false" layoutX="181.0" layoutY="198.0" promptText="Last Name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

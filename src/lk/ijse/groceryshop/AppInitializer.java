@@ -18,10 +18,12 @@ import java.util.ArrayList;
 public class AppInitializer extends Application {
 
     public static void main(String[] args) {
+
         launch(args);
     }
     @Override
     public void start(Stage primaryStage) {
+
         Session session= HbFactoryConfiguration.getInstance().getSession();
         Transaction transaction=session.beginTransaction();
 
@@ -35,6 +37,8 @@ public class AppInitializer extends Application {
             e.printStackTrace();
         }
         primaryStage.show();
+
+
 
 
 

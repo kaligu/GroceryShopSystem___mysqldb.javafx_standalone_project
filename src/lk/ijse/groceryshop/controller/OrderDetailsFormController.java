@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.groceryshop.view.tm.OrderTm;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -39,6 +40,9 @@ public class OrderDetailsFormController {
     }
 
     private void loadOrders() {
+        //ObservableList<OrderTm> tmList= FXCollections.observableArrayList();
+
+
 /*
 
         try{

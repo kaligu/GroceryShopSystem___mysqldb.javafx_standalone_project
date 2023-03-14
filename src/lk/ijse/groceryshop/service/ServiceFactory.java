@@ -1,7 +1,6 @@
 package lk.ijse.groceryshop.service;
 
-import lk.ijse.groceryshop.service.custom.Impl.CustomerServiceImpl;
-import lk.ijse.groceryshop.service.custom.Impl.ItemServiceImpl;
+import lk.ijse.groceryshop.service.custom.Impl.*;
 
 public class ServiceFactory {
     private static ServiceFactory serviceFactory;
@@ -18,6 +17,12 @@ public class ServiceFactory {
                 return (T)new CustomerServiceImpl();
             case ITEM:
                 return (T)new ItemServiceImpl();
+            case ORDER:
+                return (T)new OrderServiceImpl();
+            case ORDERDETAILS:
+                return (T)new OrderDetailsServiceimpl();
+            case PLACEORDER:
+                return (T)new PlaceOrderServiceImpl();
             default:
                 return null;
         }

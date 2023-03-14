@@ -100,8 +100,17 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO findCustomerByPk(String pk) {
         session= HbFactoryConfiguration.getInstance().getSession();
         transaction=session.beginTransaction();
-
-        return new CustomerDTO(convertor.fromCustomer(customerDAO.findByPk(pk,session)));
+        CustomerDTO cd=null;
+        try {
+            cd = (convertor.fromCustomer(customerDAO.findByPk(pk,session)));
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (session!=null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+        return cd;
     }
 
     @Override

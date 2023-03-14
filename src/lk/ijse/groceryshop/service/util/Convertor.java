@@ -31,6 +31,23 @@ public class Convertor {
     public ItemDTO fromItem(Item item){
         return new ItemDTO(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand(),item.getOrderDetailsList());
     }
+
+    public Order toOrder(OrdersDTO ordersDTO){
+        return new Order(ordersDTO.getOrderId(),ordersDTO.getDate(),ordersDTO.getTotalCost(),ordersDTO.getCustomer(),ordersDTO.getOrderDetailsList());
+    }
+
+    public OrdersDTO fromOrder(Order order){
+        return new OrdersDTO(order.getOrderId(),order.getDate(),order.getTotalCost(),order.getCustomer(),order.getOrderDetailsList());
+    }
+
+    public OrderDetails toOrderDetails(OrderDetailsDTO orderDetailsDTO){
+        return new OrderDetails(orderDetailsDTO.getId(),orderDetailsDTO.getQty(),orderDetailsDTO.getOrder(),orderDetailsDTO.getItem());
+    }
+
+    public OrderDetailsDTO fromOrderDetails(OrderDetails orderDetails){
+        return new OrderDetailsDTO(orderDetails.getId(),orderDetails.getQty(),orderDetails.getOrder(),orderDetails.getItem());
+    }
+
 /*
     public List<CustomerDTO> fromCustomerList(List<Customer> customerList){
         List<CustomerDTO> customerDTOS = new ArrayList<>();

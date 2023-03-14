@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+
 
 @Entity
 @Table(name = "item")
@@ -32,4 +32,17 @@ public class Item implements SuperEntity{
             CascadeType.ALL
     })
     private List<OrderDetails> orderDetailsList= new ArrayList<>();
+
+    public Item(String code) {
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "code='" + code + '\'' +
+                ", description='" + description + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", qtyOnHand=" + qtyOnHand +
+                '}';
+    }
 }

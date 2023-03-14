@@ -78,7 +78,7 @@ public class ItemFormController {
 
         ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
 
-        List<ItemDTO> itemList=itemService.searchCustomerByText(searchText);
+        List<ItemDTO> itemList=itemService.searchItemByText(searchText);
 
         for (ItemDTO i:itemList){
             Button btn = new Button("Delete");

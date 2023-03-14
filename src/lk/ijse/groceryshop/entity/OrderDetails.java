@@ -8,11 +8,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 
 @Entity
 @Table(name = "order_details")
-public class OrderDetails {
+public class OrderDetails implements SuperEntity{
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -32,4 +31,12 @@ public class OrderDetails {
             name = "item_code"
     )
     private Item item;
+
+    @Override
+    public String toString() {
+        return "OrderDetails{" +
+                "id=" + id +
+                ", qty=" + qty +
+                '}';
+    }
 }

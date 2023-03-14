@@ -22,5 +22,7 @@ public class OrdersDTO {
 
     private double totalCost;
 
-    private CustomerDTO customerDTO;
+    private Customer customer;
+
+    private List<OrderDetails> orderDetailsList= new ArrayList<>();
 }

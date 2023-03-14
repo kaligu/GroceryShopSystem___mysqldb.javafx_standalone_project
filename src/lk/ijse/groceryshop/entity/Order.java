@@ -10,11 +10,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order implements SuperEntity{
     @Id
     @Column(name = "order_code")
     private String orderId;
@@ -35,4 +35,14 @@ public class Order {
     })
     private List<OrderDetails> orderDetailsList= new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", date='" + date + '\'' +
+                ", totalCost=" + totalCost +
+                ", customer=" + customer +
+
+                '}';
+    }
 }
